@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "policyeval"
+version = "0.0.1"
+description = "Policy Evaluator CLI (like AccuKnox ASPM scanner)"
+readme = "README.md"
+authors = [
+    { name = "Vicky", email = "Vicky@accuknox" }
+]
+license = { text = "MIT" }
+requires-python = ">=3.8"
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.0.0"
+]
+
+[project.scripts]
+policyeval = "policyeval.cli:app"

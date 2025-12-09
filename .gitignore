@@ -1,0 +1,79 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.env
+.venv/
+venv/
+ENV/
+
+# Bytecode & cache
+*.pkl
+*.pickle
+.cache/
+pip-wheel-metadata/
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+*.egg
+
+# -----------------------
+# Project Specific
+# -----------------------
+# Logs
+logs/
+*.log
+
+# Reports
+reports/
+output/
+results/
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Configs that shouldn't be committed
+config.local.json
+*.secret.json
+*.env.local
+*.yaml.local
+
+# AccuKnox scan results or dumps
+scan-results/
+policy-eval-output/
+artifacts/
+
+# -----------------------
+# Editors & OS
+# -----------------------
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+
+# Mac & Windows
+.DS_Store
+Thumbs.db
+
+# -----------------------
+# Containers / Kubernetes
+# -----------------------
+# Helm chart build artifacts
+charts/**/charts/
+charts/**/tmp/
+
+# Kubernetes local configs
+.kube/
+kubeconfig
