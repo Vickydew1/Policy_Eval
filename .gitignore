@@ -6,6 +6,10 @@ __pycache__/
 *.pyo
 *.pyd
 
+policy*.yaml
+*.json
+
+
 # Virtual environment
 .env
 .venv/
