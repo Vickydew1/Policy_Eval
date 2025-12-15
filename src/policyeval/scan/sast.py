@@ -15,7 +15,7 @@ SEVERITY_ORDER = {
     "CRITICAL": 4,
 }
 
-# Semgrep / Opengrep → Internal severity
+#  Opengrep : Internal severity
 SEMGREP_SEVERITY_MAP = {
     "INFO": "LOW",
     "WARNING": "MEDIUM",
@@ -29,7 +29,7 @@ def _evaluate_operator(count: int, operator: str, threshold: int) -> bool:
     Policy semantics = MAX allowed findings
     """
     if operator == ">=":
-        return count >= threshold      # ❌ violation if count >= threshold
+        return count >= threshold      
     if operator == ">":
         return count > threshold
     if operator == "<=":
@@ -53,7 +53,7 @@ def evaluate(scan_results: dict, policies: list[dict]) -> dict:
     for policy in policies:
         rules = policy.get("rules", {})
 
-        # 1️⃣ Evaluate severity rules (if any)
+        # Evaluate severity rules (if any)
         severity_rules = rules.get("severity", {})
         for sev, op_str in severity_rules.items():
             if not op_str:
@@ -74,7 +74,7 @@ def evaluate(scan_results: dict, policies: list[dict]) -> dict:
                     "message": f"{sev} findings count {count} violates rule {op_str}"
                 })
 
-        # 2️⃣ Evaluate block_if_cwe (DEDUPED per policy)
+        # Evaluate block_if_cwe rules (if any)
         cwe_rules = set(rules.get("block_if_cwe", []))
 
         if cwe_rules:

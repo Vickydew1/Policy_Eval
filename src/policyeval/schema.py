@@ -1,4 +1,4 @@
-POLICY_SCHEMA = {
+SAST_POLICY_SCHEMA = {
     "type": "object",
     "required": ["policy_name", "version", "rules"],
     "properties": {
@@ -20,7 +20,7 @@ POLICY_SCHEMA = {
                 }
             },
             "additionalProperties": False,
-            "minProperties": 1  # At least one of severity or block_if_cwe
+            "minProperties": 1  
         },
         "actions": {
             "type": "object",

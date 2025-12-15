@@ -1,7 +1,7 @@
 import yaml
 from jsonschema import validate, ValidationError
 
-from .schema import POLICY_SCHEMA
+from .schema import SAST_POLICY_SCHEMA
 
 
 def load_policy(path: str) -> dict:
@@ -16,7 +16,7 @@ def load_policy(path: str) -> dict:
         raise RuntimeError(f"Unable to read policy file '{path}': {e}")
 
     try:
-        validate(instance=policy, schema=POLICY_SCHEMA)
+        validate(instance=policy, schema=SAST_POLICY_SCHEMA)
     except ValidationError as e:
         raise RuntimeError(f"Invalid policy '{path}': {e.message}")
 
