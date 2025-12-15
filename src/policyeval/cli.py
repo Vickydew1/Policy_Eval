@@ -2,7 +2,7 @@ import json
 import sys
 import typer
 
-from policyeval.scan.sast import evaluate
+from policyeval.scan.sast.sast import evaluate
 from policyeval.policy import load_policy
 
 

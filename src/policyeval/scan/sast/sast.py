@@ -39,7 +39,6 @@ def _evaluate_operator(count: int, operator: str, threshold: int) -> bool:
     return False
 
 
-
 def evaluate(scan_results: dict, policies: list[dict]) -> dict:
     summary_counts = defaultdict(int)
     failures = []
