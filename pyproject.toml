@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "policyeval"
-version = "0.2.0"
-description = "Policy Evaluator CLI (like AccuKnox ASPM scanner)"
+version = "0.3.0"
+description = "Policy Evaluator CLI"
 readme = "README.md"
 authors = [
     { name = "Vicky", email = "Vicky@accuknox.com" }
@@ -19,3 +19,6 @@ dependencies = [
 
 [project.scripts]
 policyeval = "policyeval.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
