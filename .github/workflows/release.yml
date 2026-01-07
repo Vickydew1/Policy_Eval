@@ -1,4 +1,4 @@
-name: Build and Release Policyeval
+name: Build and Release
 
 on:
   push:
@@ -9,17 +9,15 @@ permissions:
   contents: write
 
 jobs:
-# -------------------------------
-# 1️⃣ Build Python package + release
-# -------------------------------
-  release:
+  # -------------------------------
+  # 1️⃣ Build Python package (wheel)
+  # -------------------------------
+  python-release:
+    name: Build Python Wheel
     runs-on: ubuntu-latest
 
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -27,32 +25,26 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install build tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
+      - name: Install build tool
+        run: pip install build
 
-      - name: Build wheel and source
+      - name: Build wheel
         run: python -m build
 
-      - name: Create GitHub Release (Python artifacts)
-        id: create_release
+      - name: Upload wheel to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
-          files: |
-            dist/*.whl
-            dist/*.tar.gz
+          files: dist/*.whl
           draft: false
           prerelease: false
 
-# -------------------------------
-# 2️⃣ Build PyInstaller binaries
-# -------------------------------
-  build-pyinstaller:
-    needs: release
-    runs-on: ${{ matrix.os }}
-
+  # -----------------------------------
+  # 2️⃣ Build native binaries (PyInstaller)
+  # -----------------------------------
+  build-native:
+    name: Build Native Binary (${{ matrix.os }})
+    needs: python-release
     strategy:
       matrix:
         include:
@@ -60,9 +52,13 @@ jobs:
             ext: ""
           - os: windows-latest
             ext: ".exe"
+          - os: macos-latest
+            ext: ""
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -72,23 +68,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install .
+          pip install -e .
           pip install pyinstaller
 
       - name: Build Policyeval binary
-        run: |
-          pyinstaller --onefile \
-            --name policyeval \
-            src/policyeval/cli.py
+        run: pyinstaller --onefile --name policyeval src/policyeval/cli.py
 
       - name: Test binary
-        shell: bash
         run: |
           ./dist/policyeval${{ matrix.ext }} --help
+        shell: bash
 
       - name: Upload binary to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            dist/policyeval${{ matrix.ext }}
+          files: dist/policyeval${{ matrix.ext }}
