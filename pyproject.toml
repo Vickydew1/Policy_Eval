@@ -1,7 +1,3 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "policyeval"
 version = "0.3.0"
@@ -14,11 +10,10 @@ license = { text = "MIT" }
 requires-python = ">=3.8"
 dependencies = [
     "typer>=0.12.0",
-    "rich>=13.0.0"
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.23.0"
 ]
 
 [project.scripts]
 policyeval = "policyeval.cli:app"
-
-[tool.setuptools.packages.find]
-where = ["src"]

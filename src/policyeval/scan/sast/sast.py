@@ -26,16 +26,17 @@ SEMGREP_SEVERITY_MAP = {
 def _evaluate_operator(count: int, operator: str, threshold: int) -> bool:
     """
     Returns True ONLY when the policy is violated.
-    Policy semantics = MAX allowed findings
+    Security-native semantics:
+    threshold = MAX allowed findings
     """
     if operator == ">=":
-        return count >= threshold      
+        return count >= threshold   # fail at threshold or more
     if operator == ">":
-        return count > threshold
+        return count > threshold    # fail above threshold
     if operator == "<=":
-        return count > threshold
+        return count > threshold    # fail above allowed max
     if operator == "<":
-        return count >= threshold
+        return count >= threshold   # fail at or above disallowed count
     return False
 
 
@@ -102,4 +103,4 @@ def evaluate(scan_results: dict, policies: list[dict]) -> dict:
                 })
 
     passed = len(failures) == 0
-    return {"passed": passed, "summary": dict(summary_counts), "failures": failures}
+    return {"Status": passed, "summary": dict(summary_counts), "failures": failures}
