@@ -1,6 +1,6 @@
 [project]
 name = "policyeval"
-version = "0.3.0"
+version = "v0.4.0"
 description = "Policy Evaluator CLI"
 readme = "README.md"
 authors = [

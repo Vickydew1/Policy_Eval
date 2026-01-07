@@ -9,9 +9,6 @@ permissions:
   contents: write
 
 jobs:
-  # -------------------------------
-  # 1️⃣ Build Python package (wheel)
-  # -------------------------------
   python-release:
     name: Build Python Wheel
     runs-on: ubuntu-latest
@@ -39,9 +36,6 @@ jobs:
           draft: false
           prerelease: false
 
-  # -----------------------------------
-  # 2️⃣ Build native binaries (PyInstaller)
-  # -----------------------------------
   build-native:
     name: Build Native Binary (${{ matrix.os }})
     needs: python-release
